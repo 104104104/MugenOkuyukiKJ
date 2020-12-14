@@ -157,7 +157,6 @@ function attachTagMethod(tag) {
         this.x = x;
         this.y = y;
         //w,hの変更
-        /*
         var backPaperH = document.getElementById('backPaper').clientHeight;
         var tempW = tag.defaultw * (1 - (backPaperH - y) / (backPaperH));
         htmldiv.style.width = String(tempW + 6) + 'px'; //なぜか、6textareaより小さいので、足す
@@ -166,17 +165,14 @@ function attachTagMethod(tag) {
         htmltextarea.style.height = String(tempW * (2 / 3)) + 'px';
         this.w = tempW;
         this.h = tempW * (2 / 3);
-        */
         //fontsizeの変更
-        /*
         var newFontsize = Math.floor(tag.defaultFontsize * (1 - (backPaperH - y) / (backPaperH)));
         if (newFontsize > 0) {
             htmltextarea.style.fontSize = String(newFontsize) + 'px';
         }
         this.fontsize = newFontsize;
-        */
 
-        //this.skewxfunction();
+        this.skewxfunction();
     };
 }
 
@@ -220,18 +216,18 @@ function makeHTMLTag(tag) {
     div.style.position = 'absolute';
     div.style.top = String(tag.y) + 'px';
     div.style.left = String(tag.x) + 'px';
-    div.style.width = String(tag.defaultw + 6) + 'px'; //なぜか、textareaの方が6px大きいので、6足す
-    div.style.height = String(tag.defaultw * (2 / 3) + 6) + 'px'; //なぜか、textareaの方が6px大きいので、6足す
-    //div.style.transform = 'skew(' + String(tag.skewx) + 'deg)';
+    div.style.width = String(tag.w + 6) + 'px'; //なぜか、textareaの方が6px大きいので、6足す
+    div.style.height = String(tag.h + 6) + 'px'; //なぜか、textareaの方が6px大きいので、6足す
+    div.style.transform = 'skew(' + String(tag.skewx) + 'deg)';
 
     //textareaの詳細設定
     textarea.setAttribute("id", "tag" + tag.id + "textarea");
     textarea.style.position = 'absolute';
     textarea.style.top = '0px';
     textarea.style.left = '0px';
-    textarea.style.width = String(tag.defaultw) + 'px';
-    textarea.style.height = String(tag.defaultw * (2 / 3)) + 'px';
-    textarea.style.fontSize = String(tag.defaultFontsize) + 'px';
+    textarea.style.width = String(tag.w) + 'px';
+    textarea.style.height = String(tag.h) + 'px';
+    textarea.style.fontSize = String(tag.fontsize) + 'px';
     textarea.style.resize = 'none';
     textarea.value = tag.str;
 
