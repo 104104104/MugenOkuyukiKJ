@@ -265,6 +265,7 @@ function postTags() {
 //画面の読み込み時に、tagのデータをGETしてくる
 window.onload = (event) => {
     console.log('page is fully loaded');
+    drawBackground();
     get_tags();
 };
 
