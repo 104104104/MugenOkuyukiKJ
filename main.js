@@ -102,10 +102,12 @@ function makeTag() {
     let newTag = {
         x: p.x - 50,
         y: p.y - 50,
-        w: 150,
-        h: 100,
-        defaultFontsize: 15,
-        fontsize: 15,
+        defaultw: 180,
+        w: 180, //←defaultwと同じにすること
+        h: 120,
+        defaultFontsize: 20,
+        fontsize: 20, //←defaultFontsizeと同じにすること
+        skewx: 0,
         color: 'white',
         str: '',
         id: newid, //jsonのkeyと同じもの
@@ -136,29 +138,36 @@ function attachTagMethod(tag) {
     };
     //tagをx,yに動かす関数
     tag.moveTag = function(x, y) {
-        //x,yの移動
         htmldiv = tag.div();
+        htmltextarea = tag.textarea();
+        //x,yの移動
         htmldiv.style.top = String(y) + 'px';
         htmldiv.style.left = String(x) + 'px';
-        //w,hの変更, (150が定数になっている)
+        this.x = x;
+        this.y = y;
+        //w,hの変更
         var backPaperH = document.getElementById('backPaper').clientHeight;
-        var tempW = 150 * (1 - (backPaperH - y) / (backPaperH));
+        var tempW = tag.defaultw * (1 - (backPaperH - y) / (backPaperH));
         htmldiv.style.width = String(tempW + 6) + 'px'; //なぜか、6textareaより小さいので、足す
         htmldiv.style.height = String(tempW * (2 / 3) + 6) + 'px'; //なぜか、6textareaより小さいので、足す
-        htmltextarea = tag.textarea();
         htmltextarea.style.width = String(tempW) + 'px';
         htmltextarea.style.height = String(tempW * (2 / 3)) + 'px';
+        this.w = tempW;
+        this.h = tempW * (2 / 3);
         //fontsizeの変更
         var newFontsize = Math.floor(tag.defaultFontsize * (1 - (backPaperH - y) / (backPaperH)));
         if (newFontsize > 0) {
             htmltextarea.style.fontSize = String(newFontsize) + 'px';
         }
+        this.fontsize = newFontsize;
 
-        this.x = x;
-        this.y = y;
-        this.w = tempW;
-        this.h = tempW * (2 / 3);
-        this.fontsize = tag.defaultFontsize * (1 - (backPaperH - y) / (backPaperH));
+        //斜めに歪ませる
+        centerx = this.x + this.w / 2;
+        centery = this.y + this.h / 2;
+        degree = -Math.atan((backPaper.clientWidth / 2 - centerx) / centery) * (180 / Math.PI);
+        htmldiv.style.transform = 'skew(' + degree + 'deg)';
+        htmltextarea.style.transform = 'skew(' + degree + 'deg)';
+        this.skewx = degree;
     };
 }
 
@@ -204,6 +213,7 @@ function makeHTMLTag(tag) {
     div.style.left = String(tag.x) + 'px';
     div.style.width = String(tag.w + 6) + 'px'; //なぜか、textareaの方が6px大きいので、6足す
     div.style.height = String(tag.h + 6) + 'px'; //なぜか、textareaの方が6px大きいので、6足す
+    div.style.transform = 'skew(' + String(tag.skewx) + 'deg)';
 
     //textareaの詳細設定
     textarea.setAttribute("id", "tag" + tag.id + "textarea");
@@ -215,6 +225,7 @@ function makeHTMLTag(tag) {
     textarea.style.fontSize = String(tag.fontsize) + 'px';
     textarea.style.resize = 'none';
     textarea.value = tag.str;
+    textarea.style.transform = 'skew(' + String(textarea.skewx) + 'deg)';
 
     //textareaに文字が入力されるたび、tagsに保存し、サーバーに送信
     textarea.addEventListener('keyup', e => {
