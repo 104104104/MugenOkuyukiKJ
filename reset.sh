@@ -1,0 +1,3 @@
+rm debug_datafile
+rm debug_datafile_paper
+rm debug_MAX_ZINDEX

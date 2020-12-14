@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="utf-8" />
+    <title>無限奥行きKJ</title>
+    <style>
+        /*スクロールさせないcss*/
+        
+        html,
+        body {
+            overflow: hidden;
+        }
+        
+        body {
+            position: relative;
+        }
+        
+        #buttom {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: skyblue;
+            position: absolute;
+        }
+    </style>
+</head>
+
+<body id='body'>
+    <div id="backPaper" style='background-color: #666; height: 100vh; width: 100%'>
+    </div>
+    <!--デバッグ用の、小さめ背景↓-->
+    <!--div id="backPaper" style='background-color: #666; height: 700px;  width: 640px'>
+    </div-->
+    <div id="buttom"></div>
+    <script src='main.js' charset="uft-8"></script>
+</body>
+
+</html>
