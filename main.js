@@ -165,7 +165,7 @@ function attachTagMethod(tag) {
         centerx = this.x + this.w / 2;
         centery = this.y + this.h / 2;
         degree = -Math.atan((backPaper.clientWidth / 2 - centerx) / centery) * (180 / Math.PI);
-        htmldiv.style.transform = 'skew(' + degree + 'deg)';
+        //htmldiv.style.transform = 'skew(' + degree + 'deg)'; //←なぜか、この行を入れると、textareaの傾きが大きくなる
         htmltextarea.style.transform = 'skew(' + degree + 'deg)';
         this.skewx = degree;
     };
