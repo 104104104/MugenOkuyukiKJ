@@ -136,6 +136,17 @@ function attachTagMethod(tag) {
         tempTextarea.style.zIndex = MAX_ZINDEX;
         MAX_ZINDEX += 2;
     };
+    //tagを歪ませる関数
+    tag.skewxfunction = function() {
+        centerx = this.x + this.w / 2;
+        centery = this.y + this.h / 2;
+        degree = -Math.atan((backPaper.clientWidth / 2 - centerx) / centery) * (180 / Math.PI);
+        htmldiv.style.transform = 'skew(' + degree + 'deg)';
+        this.skewx = degree;
+        //console.log('degree', degree);
+        //console.log('div', htmldiv.style.transform);
+        //console.log('textarea', htmltextarea.style.transform);
+    };
     //tagをx,yに動かす関数
     tag.moveTag = function(x, y) {
         htmldiv = tag.div();
@@ -161,13 +172,7 @@ function attachTagMethod(tag) {
         }
         this.fontsize = newFontsize;
 
-        //斜めに歪ませる
-        centerx = this.x + this.w / 2;
-        centery = this.y + this.h / 2;
-        degree = -Math.atan((backPaper.clientWidth / 2 - centerx) / centery) * (180 / Math.PI);
-        //htmldiv.style.transform = 'skew(' + degree + 'deg)'; //←なぜか、この行を入れると、textareaの傾きが大きくなる
-        htmltextarea.style.transform = 'skew(' + degree + 'deg)';
-        this.skewx = degree;
+        this.skewxfunction();
     };
 }
 
@@ -225,7 +230,6 @@ function makeHTMLTag(tag) {
     textarea.style.fontSize = String(tag.fontsize) + 'px';
     textarea.style.resize = 'none';
     textarea.value = tag.str;
-    textarea.style.transform = 'skew(' + String(textarea.skewx) + 'deg)';
 
     //textareaに文字が入力されるたび、tagsに保存し、サーバーに送信
     textarea.addEventListener('keyup', e => {
