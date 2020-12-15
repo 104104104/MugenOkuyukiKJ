@@ -39,10 +39,16 @@ var p = {
 
         //カーソルの大きさを変更
         var backPaperH = document.getElementById('backPaper').clientHeight;
+        var cursorSize = 80 * (p.y / backPaperH);
         cursorImg.style.left = String(p.x) + 'px';
         cursorImg.style.top = String(p.y) + 'px';
-        cursorImg.style.width = String(80 * (p.y / backPaperH)) + 'px';
-        cursorImg.style.height = String(80 * (p.y / backPaperH)) + 'px';
+        cursorImg.style.width = String(cursorSize) + 'px';
+        cursorImg.style.height = String(cursorSize) + 'px';
+        //カーソルを歪ませる
+        centerx = p.x + cursorSize / 2;
+        centery = p.y + cursorSize / 2;
+        degree = -Math.atan((backPaper.clientWidth / 2 - centerx) / centery) * (180 / Math.PI);
+        cursorImg.style.transform = 'skew(' + degree + 'deg)';
     }
 };
 
@@ -168,9 +174,6 @@ function attachTagMethod(tag) {
         degree = -Math.atan((backPaper.clientWidth / 2 - centerx) / centery) * (180 / Math.PI);
         htmldiv.style.transform = 'skew(' + degree + 'deg)';
         this.skewx = degree;
-        //console.log('degree', degree);
-        //console.log('div', htmldiv.style.transform);
-        //console.log('textarea', htmltextarea.style.transform);
     };
     //tagをx,yに動かす関数
     tag.moveTag = function(x, y) {
