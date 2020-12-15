@@ -6,11 +6,13 @@ var tags = []
 
 let nowdatafile = 'debug';
 
-
 var DRUG_FLUG = false;
 
 //計算量を減らすため、メモリ上に置いておく
 var DRUG_NOW_TAG;
+
+//付箋の重なり順を指定するグローバル変数
+var MAX_ZINDEX = 0;
 
 //マウスの座標
 var p = {
@@ -28,9 +30,6 @@ var p = {
         p.y = newpy;
     }
 };
-
-//付箋の重なり順を指定するグローバル変数
-var MAX_ZINDEX = 0;
 
 //backPaperのevent処理
 backPaper.addEventListener("pointermove", function(e) {
@@ -54,6 +53,11 @@ backPaper.addEventListener('pointerup', function(e) {
     divs = backPaper.getElementsByClassName('drug');
     for (var div of divs) {
         div.classList.remove('drug');
+    }
+    //choosedも無くす
+    divs = backPaper.getElementsByClassName('choosed');
+    for (var div of divs) {
+        div.classList.remove('choosed');
     }
     DRUG_FLUG = false;
     DRUG_NOW_TAG = false;
@@ -131,10 +135,12 @@ function attachTagMethod(tag) {
     //tagを最前面に移動する関数
     tag.comeFront = function() {
         tempDiv = document.getElementById(String(this.id));
+        tempDivColor = tempDiv.firstElementChild;
         tempTextarea = document.getElementById('tag' + String(this.id) + 'textarea');
-        tempDiv.style.zIndex = MAX_ZINDEX + 1;
+        tempDiv.style.zIndex = MAX_ZINDEX + 2;
+        tempDivColor.style.zIndex = MAX_ZINDEX + 1;
         tempTextarea.style.zIndex = MAX_ZINDEX;
-        MAX_ZINDEX += 2;
+        MAX_ZINDEX += 3;
     };
     //tagを歪ませる関数
     tag.skewxfunction = function() {
@@ -180,6 +186,7 @@ function attachTagMethod(tag) {
 function makeHTMLTag(tag) {
     //付箋のhtml要素を追加する
     var div = document.createElement('div');
+    var divColor = document.createElement('div');
     var textarea = document.createElement('textarea');
 
     //textareaは直接クリック不可
@@ -200,6 +207,7 @@ function makeHTMLTag(tag) {
 
         //付箋を動かすための処理
         div.classList.add('drug');
+        div.firstChild.classList.add('choosed');
 
         //最前面へ
         tag.comeFront();
@@ -220,6 +228,11 @@ function makeHTMLTag(tag) {
     div.style.height = String(tag.h + 6) + 'px'; //なぜか、textareaの方が6px大きいので、6足す
     div.style.transform = 'skew(' + String(tag.skewx) + 'deg)';
 
+    divColor.style.position = 'absolute';
+    divColor.style.width = '100%';
+    divColor.style.height = '100%';
+
+
     //textareaの詳細設定
     textarea.setAttribute("id", "tag" + tag.id + "textarea");
     textarea.style.position = 'absolute';
@@ -238,6 +251,7 @@ function makeHTMLTag(tag) {
         postTags();
     });
     backPaper.appendChild(div);
+    div.appendChild(divColor);
     div.appendChild(textarea);
 }
 
