@@ -5,6 +5,7 @@ var buttom = document.getElementById("buttom");
 var tags = []
 
 let nowdatafile = 'debug';
+//let nowdatafile = 'ForHighNyammer';
 
 var DRUG_FLUG = false;
 
