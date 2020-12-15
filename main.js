@@ -8,6 +8,7 @@ var tags = []
 //let nowdatafile = 'ForHighNyammer';
 let nowdatafile = 'data/Matomeru';
 //let nowdatafile = 'data/regio';
+//let nowdatafile = 'data/7Habits';
 
 var DRUG_FLUG = false;
 
@@ -16,6 +17,8 @@ var DRUG_NOW_TAG;
 
 //付箋の重なり順を指定するグローバル変数
 var MAX_ZINDEX = 0;
+
+const MAXIMAM_ZINDEX = 2147483646; //32bitの最大値。絶対に最前面に置きたい要素に使う
 
 //マウスの座標
 var p = {
@@ -76,6 +79,7 @@ backPaper.addEventListener('pointerup', function(e) {
 //ボタンの座標の設定
 buttom.style.top = String(backPaper.clientHeight - 100) + 'px';
 buttom.style.left = String(backPaper.clientWidth - 100) + 'px';
+buttom.style.zIndex = MAXIMAM_ZINDEX;
 //ウィンドウのリサイズ時、ボタンの位置を変更
 window.addEventListener('resize', function() {
     buttom.style.top = String(backPaper.clientHeight - 100) + 'px';
