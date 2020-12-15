@@ -14,6 +14,7 @@
         
         body {
             position: relative;
+            cursor: none;
         }
         
         #buttom {
@@ -22,6 +23,13 @@
             position: absolute;
             background-image: url(./buttom2.PNG);
             background-size: cover;
+        }
+        
+        #cursorImg {
+            width: 80px;
+            height: 80px;
+            position: absolute;
+            pointer-events: none;
         }
         
         .choosed {
@@ -33,10 +41,11 @@
 
 <body id='body'>
     <div id="backPaper" style='background-color: #666; height: 100vh; width: 100%'>
-        <canvas id="perspective" style='background-color: #999; height: 100vh; width: 100%'></canvas>
+        <canvas id="perspective" style='background-color: #999; height: 100%; width: 100%'></canvas>
     </div>
     <div id="buttom">
     </div>
+    <img src="./cursor.PNG" id='cursorImg'>
     <script src='drawBackGround.js ' charset="uft-8"></script>
     <script src='main.js ' charset="uft-8"></script>
 </body>

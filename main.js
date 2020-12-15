@@ -1,6 +1,7 @@
 var body = document.getElementById("body");
 var backPaper = document.getElementById("backPaper");
 var buttom = document.getElementById("buttom");
+var cursorImg = document.getElementById("cursorImg");
 
 var tags = []
 
@@ -19,6 +20,7 @@ var DRUG_NOW_TAG;
 var MAX_ZINDEX = 0;
 
 const MAXIMAM_ZINDEX = 2147483646; //32bitの最大値。絶対に最前面に置きたい要素に使う
+cursorImg.style.zIndex = MAXIMAM_ZINDEX;
 
 //マウスの座標
 var p = {
@@ -34,6 +36,13 @@ var p = {
         p.diffy = p.y - newpy;
         p.x = newpx;
         p.y = newpy;
+
+        //カーソルの大きさを変更
+        var backPaperH = document.getElementById('backPaper').clientHeight;
+        cursorImg.style.left = String(p.x) + 'px';
+        cursorImg.style.top = String(p.y) + 'px';
+        cursorImg.style.width = String(80 * (p.y / backPaperH)) + 'px';
+        cursorImg.style.height = String(80 * (p.y / backPaperH)) + 'px';
     }
 };
 
@@ -237,6 +246,7 @@ function makeHTMLTag(tag) {
     div.style.width = String(tag.w + 6) + 'px'; //なぜか、textareaの方が6px大きいので、6足す
     div.style.height = String(tag.h + 6) + 'px'; //なぜか、textareaの方が6px大きいので、6足す
     div.style.transform = 'skew(' + String(tag.skewx) + 'deg)';
+    //div.style.cursor = 'none';
 
     divColor.style.position = 'absolute';
     divColor.style.width = '100%';
@@ -253,6 +263,7 @@ function makeHTMLTag(tag) {
     textarea.style.fontSize = String(tag.fontsize) + 'px';
     textarea.style.resize = 'none';
     textarea.value = tag.str;
+    textarea.style.cursor = 'none';
 
     //textareaに文字が入力されるたび、tagsに保存し、サーバーに送信
     textarea.addEventListener('keyup', e => {
