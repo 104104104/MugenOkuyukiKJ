@@ -4,9 +4,9 @@ var buttom = document.getElementById("buttom");
 
 var tags = []
 
-let nowdatafile = 'data/debug';
+//let nowdatafile = 'data/debug';
 //let nowdatafile = 'ForHighNyammer';
-//let nowdatafile = 'data/Matomeru';
+let nowdatafile = 'data/Matomeru';
 
 var DRUG_FLUG = false;
 
@@ -59,6 +59,7 @@ backPaper.addEventListener('pointerup', function(e) {
     //choosedも無くす
     divs = backPaper.getElementsByClassName('choosed');
     for (var div of divs) {
+        div.style.zIndex = 0; //背面にないと、文字入力ができなくなる
         div.classList.remove('choosed');
     }
     DRUG_FLUG = false;
