@@ -4,8 +4,9 @@ var buttom = document.getElementById("buttom");
 
 var tags = []
 
-let nowdatafile = 'debug';
+let nowdatafile = 'data/debug';
 //let nowdatafile = 'ForHighNyammer';
+//let nowdatafile = 'data/Matomeru';
 
 var DRUG_FLUG = false;
 
