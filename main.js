@@ -44,6 +44,7 @@ backPaper.addEventListener("pointermove", function(e) {
         //tagを動かす
         try {
             tags[moveDiv.id].moveTag(tags[moveDiv.id].x - p.diffx, tags[moveDiv.id].y - p.diffy);
+            console.log(tags[moveDiv.id].madeTime);
         } catch (e) {
 
         }
@@ -119,6 +120,7 @@ function makeTag() {
         color: 'white',
         str: '',
         id: newid, //jsonのkeyと同じもの
+        madeTime: new Date(),
     }
     attachTagMethod(newTag);
     tags[newid] = newTag;
