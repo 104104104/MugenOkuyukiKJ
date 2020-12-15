@@ -7,6 +7,7 @@ var tags = []
 //let nowdatafile = 'data/debug';
 //let nowdatafile = 'ForHighNyammer';
 let nowdatafile = 'data/Matomeru';
+//let nowdatafile = 'data/regio';
 
 var DRUG_FLUG = false;
 
@@ -175,7 +176,7 @@ function attachTagMethod(tag) {
         this.w = tempW;
         this.h = tempW * (2 / 3);
         //fontsizeの変更
-        var newFontsize = Math.floor(tag.defaultFontsize * (1 - (backPaperH - y) / (backPaperH)));
+        var newFontsize = tag.defaultFontsize * (1 - (backPaperH - y) / (backPaperH));
         if (newFontsize > 0) {
             htmltextarea.style.fontSize = String(newFontsize) + 'px';
         }
