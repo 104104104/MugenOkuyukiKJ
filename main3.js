@@ -1,5 +1,3 @@
-//付箋の大きさを変えないjs
-
 var body = document.getElementById("body");
 var backPaper = document.getElementById("backPaper");
 var buttom = document.getElementById("buttom");
@@ -181,13 +179,11 @@ function attachTagMethod(tag) {
     };
     //tagを歪ませる関数
     tag.skewxfunction = function() {
-        /*
         centerx = this.x + this.w / 2;
         centery = this.y + this.h / 2;
         degree = -Math.atan((backPaper.clientWidth / 2 - centerx) / centery) * (180 / Math.PI);
         htmldiv.style.transform = 'skew(' + degree + 'deg)';
         this.skewx = degree;
-        */
     };
     //tagをx,yに動かす関数
     tag.moveTag = function(x, y) {
@@ -199,7 +195,6 @@ function attachTagMethod(tag) {
         this.x = x;
         this.y = y;
         //w,hの変更
-        /*
         var backPaperH = document.getElementById('backPaper').clientHeight;
         var tempW = tag.defaultw * (1 - (backPaperH - y) / (backPaperH));
         htmldiv.style.width = String(tempW + 6) + 'px'; //なぜか、6textareaより小さいので、足す
@@ -208,9 +203,7 @@ function attachTagMethod(tag) {
         htmltextarea.style.height = String(tempW * (2 / 3)) + 'px';
         this.w = tempW;
         this.h = tempW * (2 / 3);
-        */
         //fontsizeの変更
-        /*
         var newFontsize = tag.defaultFontsize * (1 - (backPaperH - y) / (backPaperH));
         if (newFontsize > 0) {
             htmltextarea.style.fontSize = String(newFontsize) + 'px';
@@ -218,7 +211,6 @@ function attachTagMethod(tag) {
         this.fontsize = newFontsize;
 
         this.skewxfunction();
-        */
     };
 }
 
@@ -342,9 +334,9 @@ function makeHTMLTag(tag) {
     div.style.position = 'absolute';
     div.style.top = String(tag.y) + 'px';
     div.style.left = String(tag.x) + 'px';
-    div.style.width = String(140 + 6) + 'px'; //なぜか、textareaの方が6px大きいので、6足す
-    div.style.height = String(140 * (2 / 3) + 6) + 'px'; //なぜか、textareaの方が6px大きいので、6足す
-    //div.style.transform = 'skew(' + String(tag.skewx) + 'deg)';
+    div.style.width = String(tag.w + 6) + 'px'; //なぜか、textareaの方が6px大きいので、6足す
+    div.style.height = String(tag.h + 6) + 'px'; //なぜか、textareaの方が6px大きいので、6足す
+    div.style.transform = 'skew(' + String(tag.skewx) + 'deg)';
     //div.style.cursor = 'none';
 
     divColor.style.position = 'absolute';
@@ -357,9 +349,9 @@ function makeHTMLTag(tag) {
     textarea.style.position = 'absolute';
     textarea.style.top = '0px';
     textarea.style.left = '0px';
-    textarea.style.width = String(140) + 'px';
-    textarea.style.height = String(140 * (2 / 3)) + 'px';
-    textarea.style.fontSize = String(tag.defaultFontsize - 6) + 'px';
+    textarea.style.width = String(tag.w) + 'px';
+    textarea.style.height = String(tag.h) + 'px';
+    textarea.style.fontSize = String(tag.fontsize) + 'px';
     textarea.style.resize = 'none';
     textarea.value = tag.str;
     textarea.style.cursor = 'none';
@@ -416,7 +408,7 @@ function postTags() {
 //画面の読み込み時に、tagのデータをGETしてくる
 window.onload = (event) => {
     console.log('page is fully loaded');
-    drawBackground();
+    //drawBackground();
     get_tags();
 };
 
