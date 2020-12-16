@@ -22,16 +22,6 @@ var MAX_ZINDEX = 0;
 const MAXIMAM_ZINDEX = 2147483646; //32bitの最大値。絶対に最前面に置きたい要素に使う
 cursorImg.style.zIndex = MAXIMAM_ZINDEX;
 
-//SHIFTが押されているかの判定
-var SHIFT_DOWN = false;
-body.addEventListener("keydown", function(e) {
-    SHIFT_DOWN = e.shiftKey;
-});
-body.addEventListener("keyup", function(e) {
-    SHIFT_DOWN = e.shiftKey;
-});
-
-
 //マウスの座標
 var p = {
     x: 0,
@@ -140,8 +130,8 @@ function makeTag() {
     let newTag = {
         x: p.x - 50,
         y: p.y - 50,
-        defaultw: 180,
-        w: 180, //←defaultwと同じにすること
+        defaultw: 140,
+        w: 140, //←defaultwと同じにすること
         h: 120,
         defaultFontsize: 20,
         fontsize: 20, //←defaultFontsizeと同じにすること
@@ -179,11 +169,13 @@ function attachTagMethod(tag) {
     };
     //tagを歪ませる関数
     tag.skewxfunction = function() {
+        /*
         centerx = this.x + this.w / 2;
         centery = this.y + this.h / 2;
         degree = -Math.atan((backPaper.clientWidth / 2 - centerx) / centery) * (180 / Math.PI);
         htmldiv.style.transform = 'skew(' + degree + 'deg)';
         this.skewx = degree;
+        */
     };
     //tagをx,yに動かす関数
     tag.moveTag = function(x, y) {
@@ -195,6 +187,7 @@ function attachTagMethod(tag) {
         this.x = x;
         this.y = y;
         //w,hの変更
+        /*
         var backPaperH = document.getElementById('backPaper').clientHeight;
         var tempW = tag.defaultw * (1 - (backPaperH - y) / (backPaperH));
         htmldiv.style.width = String(tempW + 6) + 'px'; //なぜか、6textareaより小さいので、足す
@@ -203,7 +196,9 @@ function attachTagMethod(tag) {
         htmltextarea.style.height = String(tempW * (2 / 3)) + 'px';
         this.w = tempW;
         this.h = tempW * (2 / 3);
+        */
         //fontsizeの変更
+        /*
         var newFontsize = tag.defaultFontsize * (1 - (backPaperH - y) / (backPaperH));
         if (newFontsize > 0) {
             htmltextarea.style.fontSize = String(newFontsize) + 'px';
@@ -211,6 +206,7 @@ function attachTagMethod(tag) {
         this.fontsize = newFontsize;
 
         this.skewxfunction();
+        */
     };
 }
 
@@ -240,34 +236,6 @@ function makeHTMLTag(tag) {
         //付箋を動かすための処理
         div.classList.add('drug');
         div.firstChild.classList.add('choosed');
-        //SHIFT時、頂点のどれかが、今クリックしているtagの下にあるtagも、動かす
-        console.log(SHIFT_DOWN);
-        if (SHIFT_DOWN) {
-            for (let onetag of tags) {
-                v1 = { x: onetag.x, y: onetag.y };
-                v2 = { x: onetag.x + onetag.w, y: onetag.y };
-                v3 = { x: onetag.x + onetag.w, y: onetag.y + onetag.h };
-                v4 = { x: onetag.x, y: onetag.y + onetag.h };
-                if (tag.x <= v1.x && v1.x <= tag.x + tag.w && tag.y <= v1.y && v1.y <= tag.y + tag.h) {
-                    onetag.div().classList.add('drug');
-                    onetag.div().firstChild.classList.add('choosed');
-                }
-                if (tag.x <= v2.x && v2.x <= tag.x + tag.w && tag.y <= v2.y && v2.y <= tag.y + tag.h) {
-                    onetag.div().classList.add('drug');
-                    onetag.div().firstChild.classList.add('choosed');
-                }
-                if (tag.x <= v3.x && v3.x <= tag.x + tag.w && tag.y <= v3.y && v3.y <= tag.y + tag.h) {
-                    onetag.div().classList.add('drug');
-                    onetag.div().firstChild.classList.add('choosed');
-                }
-                if (tag.x <= v4.x && v4.x <= tag.x + tag.w && tag.y <= v4.y && v4.y <= tag.y + tag.h) {
-                    onetag.div().classList.add('drug');
-                    onetag.div().firstChild.classList.add('choosed');
-                }
-            }
-            SHIFT_DOWN = false;
-        }
-
 
         //最前面へ
         tag.comeFront();
@@ -279,64 +247,14 @@ function makeHTMLTag(tag) {
         DRUG_FLUG = true;
     });
 
-    //複数選択時の挙動をよくするための、pointerup
-    div.addEventListener('pointerup', function(e) {
-        //全てのdivからdrugクラスをなくす
-        divs = backPaper.getElementsByClassName('drug');
-        for (var div of divs) {
-            div.classList.remove('drug');
-        }
-        //choosedも無くす
-        divs = backPaper.getElementsByClassName('choosed');
-        for (var div of divs) {
-            div.style.zIndex = 0; //背面にないと、文字入力ができなくなる
-            div.classList.remove('choosed');
-        }
-        DRUG_FLUG = false;
-        DRUG_NOW_TAG = false;
-        postTags();
-    });
-    divColor.addEventListener('pointerup', function(e) {
-        //全てのdivからdrugクラスをなくす
-        divs = backPaper.getElementsByClassName('drug');
-        for (var div of divs) {
-            div.classList.remove('drug');
-        }
-        //choosedも無くす
-        divs = backPaper.getElementsByClassName('choosed');
-        for (var div of divs) {
-            div.style.zIndex = 0; //背面にないと、文字入力ができなくなる
-            div.classList.remove('choosed');
-        }
-        DRUG_FLUG = false;
-        DRUG_NOW_TAG = false;
-        postTags();
-    });
-    textarea.addEventListener('pointerup', function(e) {
-        //全てのdivからdrugクラスをなくす
-        divs = backPaper.getElementsByClassName('drug');
-        for (var div of divs) {
-            div.classList.remove('drug');
-        }
-        //choosedも無くす
-        divs = backPaper.getElementsByClassName('choosed');
-        for (var div of divs) {
-            div.style.zIndex = 0; //背面にないと、文字入力ができなくなる
-            div.classList.remove('choosed');
-        }
-        DRUG_FLUG = false;
-        DRUG_NOW_TAG = false;
-        postTags();
-    });
-
     //divの詳細設定
     div.setAttribute("id", tag.id);
     div.style.position = 'absolute';
     div.style.top = String(tag.y) + 'px';
     div.style.left = String(tag.x) + 'px';
-    div.style.width = String(tag.w + 6) + 'px'; //なぜか、textareaの方が6px大きいので、6足す
-    div.style.height = String(tag.h + 6) + 'px'; //なぜか、textareaの方が6px大きいので、6足す
-    div.style.transform = 'skew(' + String(tag.skewx) + 'deg)';
+    div.style.width = String(140 + 6) + 'px'; //なぜか、textareaの方が6px大きいので、6足す
+    div.style.height = String(140 * (2 / 3) + 6) + 'px'; //なぜか、textareaの方が6px大きいので、6足す
+    //div.style.transform = 'skew(' + String(tag.skewx) + 'deg)';
     //div.style.cursor = 'none';
 
     divColor.style.position = 'absolute';
@@ -349,9 +267,9 @@ function makeHTMLTag(tag) {
     textarea.style.position = 'absolute';
     textarea.style.top = '0px';
     textarea.style.left = '0px';
-    textarea.style.width = String(tag.w) + 'px';
-    textarea.style.height = String(tag.h) + 'px';
-    textarea.style.fontSize = String(tag.fontsize) + 'px';
+    textarea.style.width = String(140 + 6) + 'px';
+    textarea.style.height = String(140 * (2 / 3) + 6) + 'px';
+    textarea.style.fontSize = String(20) + 'px';
     textarea.style.resize = 'none';
     textarea.value = tag.str;
     textarea.style.cursor = 'none';
