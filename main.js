@@ -411,33 +411,22 @@ window.onload = (event) => {
 };
 
 function get_tags() {
-    url = 'http://0.0.0.0:8401/get';
 
-    //URLにnowdatafileを引数として追加する
-    let url_obj = new URL(url);
-    let params = new URLSearchParams();
-    params.append('datafileID', nowdatafile);
-    url_obj.search = params.toString();
+    //var utf8str = unescape(encodeURIComponent(text));
+    //getdata = JSON.parse(utf8str);
+    MAX_ZINDEX = 1347;
 
-    fetch(url_obj.toString(), {
-            method: 'GET',
-        }, )
-        .then(function(response) {
-            return response.text();
-        })
-        .then(function(text) {
-            getdata = JSON.parse(text);
+    //tagsに、GETデータを代入
+    //console.log(text);
+    tags = text;
+    console.log(text[0].str);
 
-            temp = getdata.pop(getdata.length); //MAX_ZINDEXは、配列の最後に入っている
-            MAX_ZINDEX = temp['MAX_ZINDEX'];
-
-            //tagsに、GETデータを代入
-            tags = getdata;
-
-            //tagsをHTMLとして表示する
-            for (let tag of tags) {
-                attachTagMethod(tag);
-                makeHTMLTag(tag);
-            }
-        });
+    //tagsをHTMLとして表示する
+    for (let tag of tags) {
+        //console.log(tag.str);
+        tag.str = unescape(encodeURIComponent(tag.str));
+        //console.log(tag.str);
+        attachTagMethod(tag);
+        makeHTMLTag(tag);
+    }
 }
