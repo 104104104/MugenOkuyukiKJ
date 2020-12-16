@@ -391,6 +391,7 @@ function postTags() {
     json_tags = JSON.stringify(tags);
 
     //Pythonサーバーにjsonを送る
+    /*
     let formData = new FormData();
     formData.append('param', json_tags);
     formData.append('chooseData', nowdatafile);
@@ -401,6 +402,7 @@ function postTags() {
         method: 'POST',
         body: formData,
     });
+    */
 }
 
 //画面の読み込み時に、tagのデータをGETしてくる
@@ -419,13 +421,9 @@ function get_tags() {
     //tagsに、GETデータを代入
     //console.log(text);
     tags = text;
-    console.log(text[0].str);
 
     //tagsをHTMLとして表示する
     for (let tag of tags) {
-        //console.log(tag.str);
-        tag.str = unescape(encodeURIComponent(tag.str));
-        //console.log(tag.str);
         attachTagMethod(tag);
         makeHTMLTag(tag);
     }
