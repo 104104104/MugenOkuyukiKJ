@@ -7,9 +7,10 @@ var tags = []
 
 //let nowdatafile = 'data/debug';
 //let nowdatafile = 'ForHighNyammer';
-let nowdatafile = 'data/Matomeru';
-//let nowdatafile = 'data/regio';
+//let nowdatafile = 'data/Matomeru';
+//let nowdatafile = 'data/nobineko';
 //let nowdatafile = 'data/7Habits';
+let nowdatafile = 'data/wantSomeSpace';
 
 var DRUG_FLUG = false;
 
@@ -102,8 +103,8 @@ backPaper.addEventListener('pointerup', function(e) {
 // ボタン関連
 //
 //ボタンの座標の設定
-buttom.style.top = String(backPaper.clientHeight - 100) + 'px';
-buttom.style.left = String(backPaper.clientWidth - 100) + 'px';
+buttom.style.top = String(backPaper.clientHeight - 150) + 'px';
+buttom.style.left = String(backPaper.clientWidth - 150) + 'px';
 buttom.style.zIndex = MAXIMAM_ZINDEX;
 //ウィンドウのリサイズ時、ボタンの位置を変更
 window.addEventListener('resize', function() {
