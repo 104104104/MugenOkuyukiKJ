@@ -31,9 +31,13 @@ promise.then(() => {
     console.log(data)
     for (let name of data) {
         console.log(name)
-        var newElement = document.createElement("p"); // p要素作成
-        var newContent = document.createTextNode(name.displayName); // テキストノードを作成
-        newElement.appendChild(newContent); // p要素にテキストノードを追加
+        var newElement = document.createElement("a");
+        var newContent = document.createTextNode('表示名:' + name.displayName + ' id:' + name.datafileID);
+        newElement.appendChild(newContent);
+
+        newElement.href = './index.html'
+
+        newElement.style.display = 'block';
 
         body.appendChild(newElement);
     }
