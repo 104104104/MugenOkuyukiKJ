@@ -412,7 +412,7 @@ window.onload = (event) => {
     //nowdatafile = params.get('filenameID');
     console.log((new URL(document.location)).searchParams.get('filenameID'));
     //nowdatafile = 'data/Matomeru'
-    nowdatafile = 'data/' + (new URL(document.location)).searchParams.get('filenameID');
+    nowdatafile = (new URL(document.location)).searchParams.get('filenameID');
     console.log(nowdatafile);
     drawBackground();
     get_tags();

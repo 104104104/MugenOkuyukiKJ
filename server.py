@@ -12,8 +12,8 @@ def get():  # 関数名は重複していなければなんでもよい
     datafileID = request.args.get('datafileID', '')
 
     #tagsを読み込み
-    SaveFileName = './'+datafileID+'_datafile'
-    SaveFileName2 = './'+datafileID+'_MAX_ZINDEX'
+    SaveFileName = './data/'+datafileID+'/datafile'
+    SaveFileName2 = './data/'+datafileID+'/MAX_ZINDEX'
     with open(SaveFileName, mode='r') as f:
         result += f.read()
     resultAndMaxzindex=json.loads(result)
@@ -37,12 +37,12 @@ def post():
     max_zindex = request.form["MAX_ZINDEX"]
     
     #tagsの保存
-    SaveFileName = './'+dataid+'_datafile'
+    SaveFileName = './data/'+dataid+'/datafile'
     with open(SaveFileName, mode='w') as f:
         f.write(result + "\n")
 
     #MAX_ZINDEXの保存
-    SaveFileName2 = './'+dataid+'_MAX_ZINDEX'
+    SaveFileName2 = './data/'+dataid+'/MAX_ZINDEX'
     with open(SaveFileName2, mode='w') as f:
         f.write(max_zindex + "\n")
 
