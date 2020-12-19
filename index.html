@@ -3,49 +3,11 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>無限奥行きKJ</title>
-    <style>
-        /*スクロールさせないcss*/
-        
-        html,
-        body {
-            overflow: hidden;
-        }
-        
-        body {
-            position: relative;
-            cursor: none;
-        }
-        
-        #buttom {
-            width: 100px;
-            height: 100px;
-            position: absolute;
-            background-image: url(./buttom2.PNG);
-            background-size: cover;
-        }
-        
-        #cursorImg {
-            position: absolute;
-            pointer-events: none;
-        }
-        
-        .choosed {
-            background: skyblue;
-            opacity: 0.2;
-        }
-    </style>
+    <title>無限奥行き一覧</title>
 </head>
 
 <body id='body'>
-    <div id="backPaper" style='background-color: #666; height: 100vh; width: 100%'>
-        <canvas id="perspective" style='background-color: #999; height: 100%; width: 100%'></canvas>
-    </div>
-    <div id="buttom">
-    </div>
-    <img src="./cursor.PNG" id='cursorImg'>
-    <script src='drawBackGround.js ' charset="utf-8"></script>
-    <script src='main.js ' charset="utf-8"></script>
+    <script src='list.js ' charset="utf-8"></script>
 </body>
 
 </html>
