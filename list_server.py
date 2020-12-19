@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, abort, make_response, render_template, request
 from flask_cors import CORS
-import json
+import json, os
 
 HOST = '0.0.0.0'
 PORT = 8402
@@ -21,6 +21,30 @@ def get():
     ret = json.dumps(result)
     return ret
 
+#ディレクトリを生成
+@api.route('/addSpace', methods=['POST'])
+def addSpace():
+    print('coming')
+
+    #nameListを読み込み
+    result = ''
+    fileName='./data/nameList.json'
+    with open(fileName, mode='r') as f:
+        result += f.read()
+
+    ret = json.loads(result)
+    newID = len(ret)
+    ret.append({'displayName':'test', 'datafileID': str(len(ret)) })
+
+    with open(fileName, mode='w') as f:
+        f.write(json.dumps(ret) + "\n")
+
+    os.mkdir('./data/'+str(newID))
+    print(len(ret))
+    print(result)
+    #os.mkdir('./test')
+    return True
+
 @api.route('/post', methods=['POST'])  # Postだけ受け付ける
 def post():
     result = request.form["param"]  # Postで送ったときのパラメータの名前を指定する
@@ -39,6 +63,6 @@ def post():
 
     return make_response(result)
 
-# 8401番ポートでWebサーバを起動する
+# 8402番ポートでWebサーバを起動する
 if __name__ == '__main__':
     api.run(host=HOST, port=PORT, debug=True)
