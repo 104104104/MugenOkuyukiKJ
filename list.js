@@ -32,7 +32,8 @@ window.onload = (event) => {
         });
     }).then((data) => {
         //HTMLの生成
-        for (let name of data.reverse()) {
+        revdata = data.concat().reverse();
+        for (let name of revdata) {
             var newElement = document.createElement("a");
             var newContent = document.createTextNode(name.date + ' (id:' + name.datafileID + ')');
             newElement.appendChild(newContent);
@@ -42,12 +43,33 @@ window.onload = (event) => {
 
             var textarea = document.createElement('textarea');
             textarea.value = name.memo;
+            textarea.setAttribute('id', String(name.datafileID));
             textarea.style.resize = 'none';
             textarea.style.width = '300px';
             textarea.style.height = '50px';
+
             //textareaに文字が入力されるたび、NAME_LISTをサーバーに送信
             textarea.addEventListener('keyup', e => {
-                name.memo = textarea.value;
+                for (let i of NAME_LIST) {
+                    if (i.datafileID == textarea.id) {
+                        i.memo = textarea.value;
+                        console.log(textarea.value);
+                        console.log(i.memo);
+                    }
+                }
+                console.log(NAME_LIST);
+                /*
+                name.memo = textarea.value; 
+                for (let i of NAME_LIST) {
+                    if (i.datafileID == name.datafileID) {
+                        if (i.datafileID == textarea.id) {
+                            i.memo = textarea.value;
+                            console.log('iii', i);
+                            console.log(textarea);
+                            //console.log(i.datafileID);
+                        }
+                    }
+                */
 
                 url = BASE_LIST_URL + '/postmemo';
                 let url_obj = new URL(url);

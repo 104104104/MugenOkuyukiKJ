@@ -51,6 +51,7 @@ def addSpace():
 @api.route('/postmemo', methods=['POST'])  # Postだけ受け付ける
 def post():
     result = request.form["param"]  # Postで送ったときのパラメータの名前を指定する
+    print(result)
     
     #tagsの保存
     SaveFileName = './data/nameList.json'
