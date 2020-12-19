@@ -10,7 +10,8 @@ var tags = []
 //let nowdatafile = 'data/Matomeru';
 //let nowdatafile = 'data/nobineko';
 //let nowdatafile = 'data/7Habits';
-let nowdatafile = 'data/wantSomeSpace';
+//let nowdatafile = 'data/wantSomeSpace';
+let nowdatafile;
 
 var DRUG_FLUG = false;
 
@@ -407,6 +408,12 @@ function postTags() {
 //画面の読み込み時に、tagのデータをGETしてくる
 window.onload = (event) => {
     console.log('page is fully loaded');
+    //var params = (new URL(document.location)).searchParams;
+    //nowdatafile = params.get('filenameID');
+    console.log((new URL(document.location)).searchParams.get('filenameID'));
+    //nowdatafile = 'data/Matomeru'
+    nowdatafile = 'data/' + (new URL(document.location)).searchParams.get('filenameID');
+    console.log(nowdatafile);
     drawBackground();
     get_tags();
 };
