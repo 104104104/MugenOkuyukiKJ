@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, abort, make_response, render_template, request
 from flask_cors import CORS
-import json, os
+import json, os, datetime
 
 HOST = '0.0.0.0'
 PORT = 8402
@@ -34,7 +34,7 @@ def addSpace():
 
     ret = json.loads(result)
     newID = len(ret)
-    ret.append({'displayName':'test', 'datafileID': str(len(ret)) })
+    ret.append({'date':str(datetime.datetime.today()), 'memo':'', 'datafileID': str(len(ret)) })
 
     with open(fileName, mode='w') as f:
         f.write(json.dumps(ret) + "\n")
