@@ -8,6 +8,7 @@ PORT = 8402
 api = Flask(__name__)
 CORS(api)  # CORS有効化
 
+#window読み込み時の動作
 @api.route('/get', methods=['GET'])  # Getだけ受け付ける
 def get():
     result = ''
@@ -21,6 +22,7 @@ def get():
     ret = json.dumps(result)
     return ret
 
+#ボタンが押された時の動作
 #ディレクトリを生成
 @api.route('/addSpace', methods=['POST'])
 def addSpace():
@@ -45,21 +47,15 @@ def addSpace():
     #os.mkdir('./test')
     return True
 
-@api.route('/post', methods=['POST'])  # Postだけ受け付ける
+#textareaに文字を入力した時の動作
+@api.route('/postmemo', methods=['POST'])  # Postだけ受け付ける
 def post():
     result = request.form["param"]  # Postで送ったときのパラメータの名前を指定する
-    dataid = request.form["chooseData"]
-    max_zindex = request.form["MAX_ZINDEX"]
     
     #tagsの保存
-    SaveFileName = './'+dataid+'_datafile'
+    SaveFileName = './data/nameList.json'
     with open(SaveFileName, mode='w') as f:
         f.write(result + "\n")
-
-    #MAX_ZINDEXの保存
-    SaveFileName2 = './'+dataid+'_MAX_ZINDEX'
-    with open(SaveFileName2, mode='w') as f:
-        f.write(max_zindex + "\n")
 
     return make_response(result)
 
