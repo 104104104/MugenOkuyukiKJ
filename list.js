@@ -32,7 +32,7 @@ window.onload = (event) => {
         });
     }).then((data) => {
         //HTMLの生成
-        for (let name of data) {
+        for (let name of data.reverse()) {
             var newElement = document.createElement("a");
             var newContent = document.createTextNode(name.date + ' (id:' + name.datafileID + ')');
             newElement.appendChild(newContent);
