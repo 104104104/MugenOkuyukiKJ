@@ -30,12 +30,12 @@ window.onload = (event) => {
                     getdata = JSON.parse(JSON.parse(text));
                     console.log(getdata);
                     NAME_LIST = getdata;
-                    resolve(getdata);
+                    resolve();
                 });
         });
-    }).then((data) => {
+    }).then(() => {
         //HTMLの生成
-        for (let name of data) {
+        for (let name of NAME_LIST) {
             var newElement = document.createElement("a");
             var newContent = document.createTextNode(name.date + ' (id:' + name.datafileID + ')');
             newElement.appendChild(newContent);
@@ -52,7 +52,7 @@ window.onload = (event) => {
             //textareaに文字が入力されるたび、NAME_LISTをサーバーに送信
             textarea.addEventListener('keyup', e => {
                 console.log(textarea.value);
-                //console.log(textarea);
+                console.log(textarea.value);
                 //console.log(this);
                 //console.log(name.memo);
                 name.memo = textarea.value;
@@ -66,8 +66,6 @@ window.onload = (event) => {
                 let formData = new FormData();
                 //formData.append('param', NAME_LIST);
                 formData.set('param', JSON.stringify(NAME_LIST));
-                console.log(formData);
-                console.log(NAME_LIST);
                 fetch(url_obj.toString(), {
                     method: 'POST',
                     body: formData,
