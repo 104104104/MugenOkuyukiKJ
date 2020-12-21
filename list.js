@@ -8,7 +8,6 @@ var NAME_LIST = [];
 //読み込み時の動作
 window.onload = (event) => {
     let promise = new Promise((resolve, reject) => {
-        console.log('startPromise')
         resolve()
     })
 
@@ -26,9 +25,7 @@ window.onload = (event) => {
                     return response.text();
                 })
                 .then(function(text) {
-                    console.log(text);
                     getdata = JSON.parse(JSON.parse(text));
-                    console.log(getdata);
                     NAME_LIST = getdata;
                     resolve();
                 });
@@ -45,7 +42,6 @@ window.onload = (event) => {
 
             var textarea = document.createElement('textarea');
             textarea.value = name.memo;
-            console.log(textarea.value);
             textarea.style.resize = 'none';
             textarea.style.width = '300px';
             textarea.style.height = '50px';
@@ -53,22 +49,13 @@ window.onload = (event) => {
 
             //textareaに文字が入力されるたび、NAME_LISTをサーバーに送信
             textarea.addEventListener('keyup', e => {
-                console.log(document.getElementById('textarea' + name.datafileID).value);
-                //console.log(textarea.value);
-                //console.log(textarea.value);
-                console.log(textarea);
-                //console.log(this);
-                //console.log(name.memo);
                 name.memo = document.getElementById('textarea' + name.datafileID).value;
-                //console.log(NAME_LIST);
-                //NAME_LIST[Number(name.datafileID)].memo = this.value;
 
                 url = BASE_LIST_URL + '/postmemo';
                 let url_obj = new URL(url);
 
                 //Pythonサーバーにjsonを送る
                 let formData = new FormData();
-                //formData.append('param', NAME_LIST);
                 formData.set('param', JSON.stringify(NAME_LIST));
                 fetch(url_obj.toString(), {
                     method: 'POST',
