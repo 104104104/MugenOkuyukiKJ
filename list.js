@@ -49,13 +49,17 @@ window.onload = (event) => {
             textarea.style.resize = 'none';
             textarea.style.width = '300px';
             textarea.style.height = '50px';
+            textarea.setAttribute("id", 'textarea' + name.datafileID);
+
             //textareaに文字が入力されるたび、NAME_LISTをサーバーに送信
             textarea.addEventListener('keyup', e => {
-                console.log(textarea.value);
-                console.log(textarea.value);
+                console.log(document.getElementById('textarea' + name.datafileID).value);
+                //console.log(textarea.value);
+                //console.log(textarea.value);
+                console.log(textarea);
                 //console.log(this);
                 //console.log(name.memo);
-                name.memo = textarea.value;
+                name.memo = document.getElementById('textarea' + name.datafileID).value;
                 //console.log(NAME_LIST);
                 //NAME_LIST[Number(name.datafileID)].memo = this.value;
 
