@@ -35,13 +35,11 @@ window.onload = (event) => {
         var revNameList = NAME_LIST.concat().reverse();
         for (let name of revNameList) {
             var newElement = document.createElement("a");
-            console.log(name.date.split(' ')[0].split('-'));
 
             //日付と曜日を表示する
             dateLi = name.date.split(' ')[0].split('-')
             let weekdate = new Date(String(Number(dateLi[0])), String(Number(dateLi[1]) - 1), dateLi[2]);
             var dayOfWeek = ["(日)", "(月)", "(火)", "(水)", "(木)", "(金)", "(土)"];
-            console.log(dayOfWeek[weekdate.getDay()], weekdate.getDay(), weekdate);
             var todayWeek = dayOfWeek[weekdate.getDay()];
 
             var newContent = document.createTextNode(name.date.split(' ')[0] + todayWeek + ' ' + name.date.split(' ')[1] + ' (id:' + name.datafileID + ')');
