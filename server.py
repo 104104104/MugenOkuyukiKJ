@@ -2,6 +2,9 @@ from flask import Flask, jsonify, abort, make_response, render_template, request
 from flask_cors import CORS
 import json
 
+HOST = '0.0.0.0'
+PORT = 8401
+
 api = Flask(__name__)
 CORS(api)  # CORS有効化
 
@@ -50,4 +53,4 @@ def post():
 
 # 8401番ポートでWebサーバを起動する
 if __name__ == '__main__':
-    api.run(host='0.0.0.0', port=8401, debug=True)
+    api.run(host=HOST, port=PORT, debug=True)
