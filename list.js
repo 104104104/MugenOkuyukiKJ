@@ -34,7 +34,7 @@ window.onload = (event) => {
         //HTMLの生成
         var revNameList = NAME_LIST.concat().reverse();
         for (let name of revNameList) {
-            var newElement = document.createElement("a");
+            var atag = document.createElement("a");
 
             //日付と曜日を表示する
             dateLi = name.date.split(' ')[0].split('-')
@@ -42,11 +42,16 @@ window.onload = (event) => {
             var dayOfWeek = ["(日)", "(月)", "(火)", "(水)", "(木)", "(金)", "(土)"];
             var todayWeek = dayOfWeek[weekdate.getDay()];
 
-            var newContent = document.createTextNode(name.date.split(' ')[0] + todayWeek + ' ' + name.date.split(' ')[1] + ' (id:' + name.datafileID + ')');
-            newElement.appendChild(newContent);
-            newElement.href = './main.html?filenameID=' + name.datafileID;
-            newElement.style.display = 'block';
-            body.appendChild(newElement);
+            var atagText = document.createTextNode(name.date.split(' ')[0] + todayWeek + ' ' + name.date.split(' ')[1] + ' (id:' + name.datafileID + ')');
+            atag.appendChild(atagText);
+            atag.href = './main.html?filenameID=' + name.datafileID;
+            //atag.style.display = 'block';
+
+            var ptag = document.createElement("p");
+            ptag.appendChild(atag);
+            ptag.style.marginBottom = '0px';
+            ptag.style.paddingBottom = '0px';
+            body.appendChild(ptag);
 
             var textarea = document.createElement('textarea');
             textarea.value = name.memo;
