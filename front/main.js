@@ -2,6 +2,7 @@ var body = document.getElementById("body");
 var backPaper = document.getElementById("backPaper");
 var buttom = document.getElementById("buttom");
 var cursorImg = document.getElementById("cursorImg");
+var canvas = document.getElementById('perspective');
 
 var tags = []
 
@@ -27,6 +28,9 @@ body.addEventListener("keyup", function(e) {
     SHIFT_DOWN = e.shiftKey;
 });
 
+// windowのサイズ。この値と実際のwindowのサイズを用いて、付箋の位置を相対的に動かす
+const WINDOW_X = 10000;
+const WINDOW_Y = 10000;
 
 //マウスの座標
 var p = {
@@ -130,12 +134,25 @@ buttom.addEventListener("pointerdown", function(e) {
 // 付箋関連
 //
 
+// 画面サイズ上での座標を、絶対座標に変換する関数
+function relativePos2AbsolutePos(x,y) {
+    return [ WINDOW_X * x / canvas.width, WINDOW_Y * y / canvas.height ];
+}
+
+// 絶対座標を、画面サイズ上での座標に変換する関数
+function AbsolutePos2relativePos(x,y) {
+    return [ x * canvas.width /  WINDOW_X, y * canvas.height /  WINDOW_Y ];
+}
+
 //付箋を追加する関数
 function makeTag() {
     let newid = String(tags.length);
+    let newTagx = p.x - 50;
+    let newTagy = p.y - 50;
+    let [ab_x, ab_y] = relativePos2AbsolutePos(newTagx, newTagy);
     let newTag = {
-        x: p.x - 50,
-        y: p.y - 50,
+        x: newTagx,
+        y: newTagy,
         defaultw: 180,
         w: 180, //←defaultwと同じにすること
         h: 120,
@@ -146,6 +163,9 @@ function makeTag() {
         str: '',
         id: newid, //jsonのkeyと同じもの
         madeTime: new Date(),
+
+        absolute_x: ab_x,
+        absolute_y: ab_y,
     }
     attachTagMethod(newTag);
     tags[newid] = newTag;
