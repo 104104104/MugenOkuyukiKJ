@@ -52,7 +52,6 @@ def addSpace():
 def post():
     result = request.form["param"]  # Postで送ったときのパラメータの名前を指定する
     print(result)
-    
     #tagsの保存
     SaveFileName = './data/nameList.json'
     with open(SaveFileName, mode='w') as f:
