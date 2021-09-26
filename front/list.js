@@ -44,7 +44,7 @@ window.onload = (event) => {
 
             var atagText = document.createTextNode(name.date.split(' ')[0] + todayWeek + ' ' + name.date.split(' ')[1] + ' (id:' + name.datafileID + ')');
             atag.appendChild(atagText);
-            atag.href = './main.html?filenameID=' + name.datafileID;
+            atag.href = './front/main.html?filenameID=' + name.datafileID;
             //atag.style.display = 'block';
 
             var ptag = document.createElement("p");
