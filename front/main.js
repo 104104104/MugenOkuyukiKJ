@@ -1,3 +1,5 @@
+import * as imageTag from './module/imageTag.js';
+
 var body = document.getElementById("body");
 var backPaper = document.getElementById("backPaper");
 var buttom = document.getElementById("buttom");
@@ -40,8 +42,8 @@ var p = {
     diffy: 0,
     updateValue: function(e) { //マウスの座標の更新
         const rect = backPaper.getBoundingClientRect(); //親要素から見た座標を取得する
-        newpx = e.clientX - rect.left;
-        newpy = e.clientY - rect.top;
+        let newpx = e.clientX - rect.left;
+        let newpy = e.clientY - rect.top;
         p.diffx = p.x - newpx;
         p.diffy = p.y - newpy;
         p.x = newpx;
@@ -55,9 +57,9 @@ var p = {
         cursorImg.style.width = String(cursorSize) + 'px';
         cursorImg.style.height = String(cursorSize) + 'px';
         //カーソルを歪ませる
-        centerx = p.x + cursorSize / 2;
-        centery = p.y + cursorSize / 2;
-        degree = -Math.atan((backPaper.clientWidth / 2 - centerx) / centery) * (180 / Math.PI);
+        let centerx = p.x + cursorSize / 2;
+        let centery = p.y + cursorSize / 2;
+        let degree = -Math.atan((backPaper.clientWidth / 2 - centerx) / centery) * (180 / Math.PI);
         cursorImg.style.transform = 'skew(' + degree + 'deg)';
     }
 };
@@ -67,7 +69,7 @@ backPaper.addEventListener("pointermove", function(e) {
     p.updateValue(e);
 
     //付箋を動かす処理
-    moveDivs = backPaper.getElementsByClassName('drug'); //drugクラスをgetelementする
+    let moveDivs = backPaper.getElementsByClassName('drug'); //drugクラスをgetelementする
     for (let moveDiv of moveDivs) { //それを動かす
         //tagを動かす
         try {
@@ -81,7 +83,7 @@ backPaper.addEventListener("pointermove", function(e) {
 
 backPaper.addEventListener('pointerup', function(e) {
     //全てのdivからdrugクラスをなくす
-    divs = backPaper.getElementsByClassName('drug');
+    let divs = backPaper.getElementsByClassName('drug');
     for (var div of divs) {
         div.classList.remove('drug');
     }
@@ -113,7 +115,7 @@ window.addEventListener('resize', function() {
 //ボタンが押されたら、付箋の追加
 buttom.addEventListener("pointerdown", function(e) {
     e.preventDefault();
-    newTag = makeTag();
+    let newTag = makeTag();
 
     //ボタンを押した直後は、ドラッグ可能状態
     newTag.div().classList.add('drug');
@@ -162,6 +164,8 @@ function makeTag() {
 
         absolute_x: ab_x,
         absolute_y: ab_y,
+
+        dateType: 'str',
     }
     attachTagMethod(newTag);
     tags[newid] = newTag;
@@ -181,9 +185,9 @@ function attachTagMethod(tag) {
     };
     //tagを最前面に移動する関数
     tag.comeFront = function() {
-        tempDiv = document.getElementById(String(this.id));
-        tempDivColor = tempDiv.firstElementChild;
-        tempTextarea = document.getElementById('tag' + String(this.id) + 'textarea');
+        let tempDiv = document.getElementById(String(this.id));
+        let tempDivColor = tempDiv.firstElementChild;
+        let tempTextarea = document.getElementById('tag' + String(this.id) + 'textarea');
         tempDiv.style.zIndex = MAX_ZINDEX + 2;
         tempDivColor.style.zIndex = MAX_ZINDEX + 1;
         tempTextarea.style.zIndex = MAX_ZINDEX;
@@ -191,16 +195,17 @@ function attachTagMethod(tag) {
     };
     //tagを歪ませる関数
     tag.skewxfunction = function() {
-        centerx = this.x + this.w / 2;
-        centery = this.y + this.h / 2;
-        degree = -Math.atan((backPaper.clientWidth / 2 - centerx) / centery) * (180 / Math.PI);
+        let centerx = this.x + this.w / 2;
+        let centery = this.y + this.h / 2;
+        let degree = -Math.atan((backPaper.clientWidth / 2 - centerx) / centery) * (180 / Math.PI);
+        let htmldiv = tag.div();
         htmldiv.style.transform = 'skew(' + degree + 'deg)';
         this.skewx = degree;
     };
     //tagをx,yに動かす関数
     tag.moveTag = function(x, y) {
-        htmldiv = tag.div();
-        htmltextarea = tag.textarea();
+        let htmldiv = tag.div();
+        let htmltextarea = tag.textarea();
         //x,yの移動
         htmldiv.style.top = String(y) + 'px';
         htmldiv.style.left = String(x) + 'px';
@@ -295,7 +300,7 @@ function makeHTMLTag(tag) {
     //複数選択時の挙動をよくするための、pointerup
     div.addEventListener('pointerup', function(e) {
         //全てのdivからdrugクラスをなくす
-        divs = backPaper.getElementsByClassName('drug');
+        let divs = backPaper.getElementsByClassName('drug');
         for (var div of divs) {
             div.classList.remove('drug');
         }
@@ -311,7 +316,7 @@ function makeHTMLTag(tag) {
     });
     divColor.addEventListener('pointerup', function(e) {
         //全てのdivからdrugクラスをなくす
-        divs = backPaper.getElementsByClassName('drug');
+        let divs = backPaper.getElementsByClassName('drug');
         for (var div of divs) {
             div.classList.remove('drug');
         }
@@ -409,7 +414,7 @@ window.addEventListener('resize', function() {
 //付箋のデータをサーバーに送る関数
 function postTags() {
     //tagsをjsonにする
-    json_tags = JSON.stringify(tags);
+    let json_tags = JSON.stringify(tags);
 
     //Pythonサーバーにjsonを送る
     let formData = new FormData();
@@ -426,12 +431,13 @@ function postTags() {
 
 //画面の読み込み時に、tagのデータをGETしてくる
 window.onload = (event) => {
+    nowdatafile = (new URL(document.location)).searchParams.get('filenameID');
     drawBackground();
     get_tags();
 };
 
 function get_tags() {
-    url = 'http://0.0.0.0:8401/get';
+    let url = 'http://0.0.0.0:8401/get';
 
     //URLにnowdatafileを引数として追加する
     let url_obj = new URL(url);
@@ -446,9 +452,9 @@ function get_tags() {
             return response.text();
         })
         .then(function(text) {
-            getdata = JSON.parse(text);
+            let getdata = JSON.parse(text);
 
-            temp = getdata.pop(getdata.length); //MAX_ZINDEXは、配列の最後に入っている
+            let temp = getdata.pop(getdata.length); //MAX_ZINDEXは、配列の最後に入っている
             MAX_ZINDEX = temp['MAX_ZINDEX'];
 
             //tagsに、GETデータを代入
