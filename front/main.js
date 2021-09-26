@@ -397,6 +397,14 @@ function getDrugNowTag() {
     return DRUG_NOW_TAG;
 }
 
+window.addEventListener('resize', function() {
+        // ウィンドウリサイズ時、tagの位置を変更する
+        for (let onetag of tags) {
+            let [newx, newy] = AbsolutePos2relativePos(onetag.absolute_x, onetag.absolute_y);
+            onetag.moveTag(newx, newy);
+        }
+    }
+);
 
 
 //
