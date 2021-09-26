@@ -72,7 +72,7 @@ backPaper.addEventListener("pointermove", function(e) {
         //tagを動かす
         try {
             tags[moveDiv.id].moveTag(tags[moveDiv.id].x - p.diffx, tags[moveDiv.id].y - p.diffy);
-            console.log(tags[moveDiv.id].madeTime);
+            console.log(tags[moveDiv.id].absolute_x, tags[moveDiv.id].absolute_y);
         } catch (e) {
 
         }
@@ -136,12 +136,12 @@ buttom.addEventListener("pointerdown", function(e) {
 
 // 画面サイズ上での座標を、絶対座標に変換する関数
 function relativePos2AbsolutePos(x,y) {
-    return [ WINDOW_X * x / canvas.width, WINDOW_Y * y / canvas.height ];
+    return [ WINDOW_X * x / window.innerWidth, WINDOW_Y * y / window.innerHeight ];
 }
 
 // 絶対座標を、画面サイズ上での座標に変換する関数
 function AbsolutePos2relativePos(x,y) {
-    return [ x * canvas.width /  WINDOW_X, y * canvas.height /  WINDOW_Y ];
+    return [ x * window.innerWidth /  WINDOW_X, y * window.innerHeight /  WINDOW_Y ];
 }
 
 //付箋を追加する関数
@@ -210,6 +210,8 @@ function attachTagMethod(tag) {
         htmldiv.style.left = String(x) + 'px';
         this.x = x;
         this.y = y;
+        [this.absolute_x, this.absolute_y] = relativePos2AbsolutePos(x,y);
+
         //w,hの変更
         var backPaperH = document.getElementById('backPaper').clientHeight;
         var tempW = tag.defaultw * (1 - (backPaperH - y) / (backPaperH));
