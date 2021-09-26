@@ -72,7 +72,6 @@ backPaper.addEventListener("pointermove", function(e) {
         //tagを動かす
         try {
             tags[moveDiv.id].moveTag(tags[moveDiv.id].x - p.diffx, tags[moveDiv.id].y - p.diffy);
-            console.log(tags[moveDiv.id].absolute_x, tags[moveDiv.id].absolute_y);
         } catch (e) {
 
         }
@@ -113,7 +112,6 @@ window.addEventListener('resize', function() {
 
 //ボタンが押されたら、付箋の追加
 buttom.addEventListener("pointerdown", function(e) {
-    //console.log(papers);
     e.preventDefault();
     newTag = makeTag();
 
@@ -125,8 +123,6 @@ buttom.addEventListener("pointerdown", function(e) {
     newTag.comeFront();
 
     DRUG_NOW_TAG = newTag;
-
-    console.log('TAGS', tags);
 });
 
 
@@ -259,7 +255,6 @@ function makeHTMLTag(tag) {
         div.classList.add('drug');
         div.firstChild.classList.add('choosed');
         //SHIFT時、頂点のどれかが、今クリックしているtagの下にあるtagも、動かす
-        console.log(SHIFT_DOWN);
         if (SHIFT_DOWN) {
             for (let onetag of tags) {
                 v1 = { x: onetag.x, y: onetag.y };
@@ -431,13 +426,6 @@ function postTags() {
 
 //画面の読み込み時に、tagのデータをGETしてくる
 window.onload = (event) => {
-    console.log('page is fully loaded');
-    //var params = (new URL(document.location)).searchParams;
-    //nowdatafile = params.get('filenameID');
-    console.log((new URL(document.location)).searchParams.get('filenameID'));
-    //nowdatafile = 'data/Matomeru'
-    nowdatafile = (new URL(document.location)).searchParams.get('filenameID');
-    console.log(nowdatafile);
     drawBackground();
     get_tags();
 };
