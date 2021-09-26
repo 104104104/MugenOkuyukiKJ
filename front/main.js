@@ -262,10 +262,10 @@ function makeHTMLTag(tag) {
         //SHIFT時、頂点のどれかが、今クリックしているtagの下にあるtagも、動かす
         if (SHIFT_DOWN) {
             for (let onetag of tags) {
-                v1 = { x: onetag.x, y: onetag.y };
-                v2 = { x: onetag.x + onetag.w, y: onetag.y };
-                v3 = { x: onetag.x + onetag.w, y: onetag.y + onetag.h };
-                v4 = { x: onetag.x, y: onetag.y + onetag.h };
+                let v1 = { x: onetag.x, y: onetag.y };
+                let v2 = { x: onetag.x + onetag.w, y: onetag.y };
+                let v3 = { x: onetag.x + onetag.w, y: onetag.y + onetag.h };
+                let v4 = { x: onetag.x, y: onetag.y + onetag.h };
                 if (tag.x <= v1.x && v1.x <= tag.x + tag.w && tag.y <= v1.y && v1.y <= tag.y + tag.h) {
                     onetag.div().classList.add('drug');
                     onetag.div().firstChild.classList.add('choosed');
@@ -332,7 +332,7 @@ function makeHTMLTag(tag) {
     });
     textarea.addEventListener('pointerup', function(e) {
         //全てのdivからdrugクラスをなくす
-        divs = backPaper.getElementsByClassName('drug');
+        let divs = backPaper.getElementsByClassName('drug');
         for (var div of divs) {
             div.classList.remove('drug');
         }
