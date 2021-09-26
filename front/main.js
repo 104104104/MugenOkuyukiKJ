@@ -5,12 +5,6 @@ var cursorImg = document.getElementById("cursorImg");
 
 var tags = []
 
-//let nowdatafile = 'data/debug';
-//let nowdatafile = 'ForHighNyammer';
-//let nowdatafile = 'data/Matomeru';
-//let nowdatafile = 'data/nobineko';
-//let nowdatafile = 'data/7Habits';
-//let nowdatafile = 'data/wantSomeSpace';
 let nowdatafile;
 
 var DRUG_FLUG = false;
