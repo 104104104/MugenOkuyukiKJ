@@ -107,8 +107,8 @@ buttom.style.left = String(backPaper.clientWidth - 150) + 'px';
 buttom.style.zIndex = MAXIMAM_ZINDEX;
 //ウィンドウのリサイズ時、ボタンの位置を変更
 window.addEventListener('resize', function() {
-    buttom.style.top = String(backPaper.clientHeight - 100) + 'px';
-    buttom.style.left = String(backPaper.clientWidth - 100) + 'px';
+    buttom.style.top = String(backPaper.clientHeight - 150) + 'px';
+    buttom.style.left = String(backPaper.clientWidth - 150) + 'px';
 }, false);
 
 //ボタンが押されたら、付箋の追加
